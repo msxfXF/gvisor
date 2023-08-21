@@ -71,8 +71,8 @@ func SetFilter(instrs []linux.BPFInstruction) error {
 //   - The race instrumentation has to be disabled for all functions that are
 //     called in a forked child.
 //
-//go:norace
 //go:nosplit
+//go:norace
 func SetFilterInChild(instrs []linux.BPFInstruction) unix.Errno {
 	if _, _, errno := unix.RawSyscall6(unix.SYS_PRCTL, linux.PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0, 0); errno != 0 {
 		return errno

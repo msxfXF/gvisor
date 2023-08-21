@@ -144,8 +144,9 @@ func (g *Gate) Close() {
 	gopark(gateCommit, gohacks.Noescape(unsafe.Pointer(&g.closingG)), WaitReasonSemacquire, TraceEvGoBlockSync, 0)
 }
 
-//go:norace
+//
 //go:nosplit
+//go:norace
 func gateCommit(g uintptr, closingG unsafe.Pointer) bool {
 	return RaceUncheckedAtomicCompareAndSwapUintptr((*uintptr)(closingG), preparingG, g)
 }

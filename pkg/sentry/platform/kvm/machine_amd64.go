@@ -312,6 +312,7 @@ func (c *vCPU) fault(signal int32, info *linux.SignalInfo) (hostarch.AccessType,
 	return accessType, platform.ErrContextSignal
 }
 
+//
 //go:nosplit
 //go:noinline
 func loadByte(ptr *byte) byte {

@@ -120,6 +120,7 @@ go_library(
         "//pkg/waiter",
         "@org_golang_google_protobuf//proto:go_default_library",
         "@org_golang_x_sys//unix:go_default_library",
+        "@com_github_davecgh_go_spew//spew:go_default_library"
     ],
 )
 

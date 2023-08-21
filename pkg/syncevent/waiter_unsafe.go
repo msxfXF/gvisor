@@ -97,8 +97,9 @@ func (w *Waiter) WaitFor(es Set) Set {
 	}
 }
 
-//go:norace
+//
 //go:nosplit
+//go:norace
 func waiterCommit(g uintptr, wg unsafe.Pointer) bool {
 	// The only way this CAS can fail is if a call to Waiter.NotifyPending()
 	// has replaced *wg with nil, in which case we should not sleep.

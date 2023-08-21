@@ -240,8 +240,8 @@ func (s *Sleeper) nextWaker(block, wakepOrSleep bool) *Waker {
 // The commit may fail if wakers have been asserted after our last check, in
 // which case they will have set s.waitingG to zero.
 //
-//go:norace
 //go:nosplit
+//go:norace
 func commitSleep(g uintptr, waitingG unsafe.Pointer) bool {
 	return sync.RaceUncheckedAtomicCompareAndSwapUintptr((*uintptr)(waitingG), preparingG, g)
 }

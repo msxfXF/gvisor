@@ -55,16 +55,16 @@ func TypeFunction(t *Type) {
 // BuiltinMap creates a new map.
 // +mustescape:local,builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func BuiltinMap(x int) map[string]bool {
 	return make(map[string]bool)
 }
 
 // +mustescape:builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func builtinMapRec(x int) map[string]bool {
 	return BuiltinMap(x)
 }
@@ -72,8 +72,8 @@ func builtinMapRec(x int) map[string]bool {
 // BuiltinClosure returns a closure around x.
 // +mustescape:local,builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func BuiltinClosure(x int) func() {
 	return func() {
 		fmt.Printf("%v", x)
@@ -82,8 +82,8 @@ func BuiltinClosure(x int) func() {
 
 // +mustescape:builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func builtinClosureRec(x int) func() {
 	return BuiltinClosure(x)
 }
@@ -91,16 +91,16 @@ func builtinClosureRec(x int) func() {
 // BuiltinMakeSlice makes a new slice.
 // +mustescape:local,builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func BuiltinMakeSlice(x int) []byte {
 	return make([]byte, x)
 }
 
 // +mustescape:builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func builtinMakeSliceRec(x int) []byte {
 	return BuiltinMakeSlice(x)
 }
@@ -108,16 +108,16 @@ func builtinMakeSliceRec(x int) []byte {
 // BuiltinAppend calls append on a slice.
 // +mustescape:local,builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func BuiltinAppend(x []byte) []byte {
 	return append(x, 0)
 }
 
 // +mustescape:builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func builtinAppendRec() []byte {
 	return BuiltinAppend(nil)
 }
@@ -125,16 +125,16 @@ func builtinAppendRec() []byte {
 // BuiltinChan makes a channel.
 // +mustescape:local,builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func BuiltinChan() chan int {
 	return make(chan int)
 }
 
 // +mustescape:builtin
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func builtinChanRec() chan int {
 	return BuiltinChan()
 }
@@ -142,8 +142,8 @@ func builtinChanRec() chan int {
 // Heap performs an explicit heap allocation.
 // +mustescape:local,heap
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func Heap() *Type {
 	var t Type
 	return &t
@@ -151,8 +151,8 @@ func Heap() *Type {
 
 // +mustescape:heap
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func heapRec() *Type {
 	return Heap()
 }
@@ -160,16 +160,16 @@ func heapRec() *Type {
 // Dispatch dispatches via an interface.
 // +mustescape:local,interface
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func Dispatch(i Interface) {
 	i.Foo()
 }
 
 // +mustescape:interface
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func dispatchRec(i Interface) {
 	Dispatch(i)
 }
@@ -177,22 +177,23 @@ func dispatchRec(i Interface) {
 // Dynamic invokes a dynamic function.
 // +mustescape:local,dynamic
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func Dynamic(f func()) {
 	f()
 }
 
 // +mustescape:dynamic
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func dynamicRec(f func()) {
 	Dynamic(f)
 }
 
-//go:noinline
+//
 //go:nosplit
+//go:noinline
 func internalFunc() {
 }
 
@@ -206,8 +207,8 @@ func Split() {
 
 // +mustescape:stack
 //
-//go:noinline
 //go:nosplit
+//go:noinline
 func splitRec() {
 	Split()
 }

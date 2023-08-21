@@ -42,6 +42,10 @@ func getTaskCurrentWorkingDirectory(t *Task) string {
 	return cwd
 }
 
+func Getcwd(t *Task) string {
+	return getTaskCurrentWorkingDirectory(t)
+}
+
 // LoadSeccheckData sets info from the task based on mask.
 func LoadSeccheckData(t *Task, mask seccheck.FieldMask, info *pb.ContextData) {
 	var cwd string

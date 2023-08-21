@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+build --action_env=GOPROXY=https://go-mod-proxy.byted.org,https://goproxy.cn,https://proxy.golang.org,direct                                               
+build --action_env=HTTP_PROXY=http://sys-proxy-rd-relay.byted.org:8118                                                                                     
+build --action_env=HTTPS_PROXY=http://sys-proxy-rd-relay.byted.org:8118                                                                                    
+build --action_env=NO_PROXY=localhost,127.0.0.1
+
 # Ensure a strong hash function.
 startup --host_jvm_args=-Dbazel.DigestFunction=SHA256
 
@@ -37,6 +42,6 @@ build:x86_64 --cpu=k8
 build:x86_64 --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
 
 # Set flags for aarch64.
-build:aarch64 --crosstool_top=@crosstool//:toolchains
-build:aarch64 --cpu=aarch64
-build:aarch64 --platforms=@io_bazel_rules_go//go/toolchain:linux_arm64
+#build:aarch64 --crosstool_top=@crosstool//:toolchains
+#build:aarch64 --cpu=aarch64
+#build:aarch64 --platforms=@io_bazel_rules_go//go/toolchain:linux_arm64

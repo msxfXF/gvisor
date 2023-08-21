@@ -16,6 +16,7 @@ package linux
 
 import (
 	"math"
+	"path/filepath"
 
 	"gvisor.dev/gvisor/pkg/abi/linux"
 	"gvisor.dev/gvisor/pkg/errors/linuxerr"
@@ -935,6 +936,11 @@ func Mkdirat(t *kernel.Task, sysno uintptr, args arch.SyscallArguments) (uintptr
 }
 
 func mkdirat(t *kernel.Task, dirfd int32, addr hostarch.Addr, mode uint) error {
+	// spc := spew.ConfigState{
+	// 	Indent:   "  ",
+	// 	MaxDepth: 3,
+	// }
+
 	path, err := copyInPath(t, addr)
 	if err != nil {
 		return err
@@ -943,6 +949,19 @@ func mkdirat(t *kernel.Task, dirfd int32, addr hostarch.Addr, mode uint) error {
 	if err != nil {
 		return err
 	}
+
+	cwd := kernel.Getcwd(t)
+	var absPath string
+	if path.Absolute {
+		absPath = path.String()
+	} else {
+		absPath = filepath.Join(cwd, path.String())
+	}
+
+	t.Debugf("[DEBUG]mkdir, cwd:%s", cwd)
+	t.Debugf("[DEBUG]mkdir, path:%s", path.String())
+	t.Debugf("[DEBUG]mkdir, absPath:%s", absPath)
+
 	defer tpop.Release(t)
 	return t.Kernel().VFS().MkdirAt(t, t.Credentials(), &tpop.pop, &vfs.MkdirOptions{
 		Mode: linux.FileMode(mode & (0777 | linux.S_ISVTX) &^ t.FSContext().Umask()),

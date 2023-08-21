@@ -171,8 +171,8 @@ func patchSignalInfo(regs *arch.Registers, signalInfo *linux.SignalInfo) {
 //
 // This is safe to call in an afterFork context.
 //
-//go:norace
 //go:nosplit
+//go:norace
 func enableCpuidFault() {
 	unix.RawSyscall6(unix.SYS_ARCH_PRCTL, linux.ARCH_SET_CPUID, 0, 0, 0, 0, 0)
 }
